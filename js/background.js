@@ -1,11 +1,26 @@
 //background.js
 
-var port = chrome.runtime.connect({name: "pass"});
-chrome.browserAction.onClicked.addListener( function(){
-  chrome.runtime.sendMessage({info:"buttonClicked"})
+// Sends message when the extension button is clicked
+chrome.browserAction.onClicked.addListener(function() {
+  chrome.runtime.onConnect.addListener(function(port) {
+    console.assert(port.name == "sendInfo");
+    port.postMessage({status: "buttonClicked"});
+    // Logs the response as a string in console if the message is correct
+    port.onMessage.addListener(function(msg) {
+      if (msg.status == "sendInfo") {
+        console.log("The song is %s by %s on the album %s located at %s", msg.song, msg.artist, msg.album, msg.url)
+      }
+    });
+  });
 });
-chrome.runtime.onMessage.addListener(function(songInfo) {
-  if (songInfo.status == "sendInfo") {
-    console.log(songInfo.url + " __ " + songInfo.song + " __ " + songInfo.artist + " __ " + songInfo.album)
-  }
-})
+
+
+/*
+chrome.browserAction.onClicked.addListener(function(request, sender, sendResponse) {
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.runtime.sendMessage(tabs[0].id, {sendInfo:"buttonClicked"}, function(response) {
+      console.log(response.url + " __ " + response.song + " __ " + response.artist + " __ " + response.album)
+    });
+  });
+});
+*/
