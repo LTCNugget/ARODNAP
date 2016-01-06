@@ -1,17 +1,20 @@
 // content.js
 
-var port = chrome.runtime.connect({name:"messagePass"});
-port.onMessage.addListener(function(message,sender) {
-  console.log("added listener for port");
-  if(message.status === "buttonClicked"){
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {     // listens for messages
+  console.log("message listener activated");
+  if(request.name === "grabInfo") {
+    console.log("request.name equals grabInfo");
     var song = document.getElementsByClassName("songTitle")[0].innerHTML;
     var artist = document.getElementsByClassName("artistSummary")[0].innerHTML;
     var album = document.getElementsByClassName("albumTitle")[0].innerHTML;
-    var art = document.getElementsByClassName("art")
-    if (art[2].src !== "") {
-      console.log('"%s" by %s on the album %s (%s).', song, artist, album, art[1].src);
-    } else {
-      console.log('"%s" by %s on the album %s. Please refresh the page and run again to get album art.', song, artist, album);
-    }
+    var art = document.getElementsByClassName("art");
+    if( song !== undefined && artist !== undefined && album !== undefined && art[1].src !== undefined) ) {     // checks to see if all the required info is present
+      for(i = art.length - 1; i > 0 ; i--) { console.log("")     // runs through art[] looking for elements with no src attributes (excluding art[0])
+        if(art[i].src === undefined) {
+          console.log('"%s" by %s on the album %s. Please refresh the page and run again to get album art.', song, artist, album);
+          break;
+        }
+      } else { console.log('"%s" by %s on the album %s (%s).', song, artist, album, art[1].src); }     // expected result
+    } else { console.log("Not all the information is present or valid."); }
   }
 });
