@@ -7,11 +7,11 @@
     "default_icon": "img/icon48.png"
   },
   "icons": {
-    "48": "icon48.png"
+    "48": "img/icon48.png"
   },
   "content_scripts": [ {
     "matches": ["<all_urls>"],
-    "js": ["content.js"]
+    "js": ["js/content.js"]
   } ],
   "background": {
     "scripts": [
