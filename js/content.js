@@ -1,5 +1,7 @@
 // content.js
 
+var isThereNoSrc;
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {     // listens for messages
   console.log("message listener activated");
   if (request.name === "grabInfo") {
@@ -13,7 +15,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {  
         console.log("");
         if (art[i].src === undefined) {
           console.log("\"%s\" by %s on the album %s. Please refresh the page and run again to get album art.", song, artist, album);
-          isThereNoSrc = false;
+          var isThereNoSrc = false;
           break;
         }
       }
