@@ -3,21 +3,16 @@
 var areAllSrcPresent = true;
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {     // listens for messages
-  if (request.name === "grabInfo") {
-    if (song !== undefined && artist !== undefined && album !== undefined && art[1].src !== undefined) {     // checks to see if all the required info is present
-      var song = document.getElementsByClassName("songTitle")[0].innerHTML;
-      var artist = document.getElementsByClassName("artistSummary")[0].innerHTML;
-      var album = document.getElementsByClassName("albumTitle")[0].innerHTML;
-      var art = document.getElementsByClassName("art");
-      for (var i = art.length - 1; i > 0; i--) {     // runs through art[] looking for elements with no src attributes (excluding art[0])
-        if (art[i].src === "") {
-          console.log("\"%s\" by %s on the album %s.", song, artist, album);
-          console.error("Album art not listed: Could not be found");
-          areAllSrcPresent = false;
-          break;
-        }
+  if ( request.name === "grabInfo" ) {
+    if ( $(".art")[0].src === "" ) { $( $(".art")[0].remove() ); }
+    if ( $(".songTitle") !== null && $(".artistSummary") !== null && $(".albumTitle") !== null && $(".art") !== null ) {     // checks to see if all the required info is present
+      for ( var i = $(".art").length - 1; i >= 0; i-- ) { if ( $(".art")[i].src === "" ) { areAllSrcPresent = false; } }     // runs through $(".art") looking for elements with no src attributes
+      if ( areAllSrcPresent === true ) { console.log("\"%s\" by %s on the album %s \(%s\).", $(".songTitle")[0].innerHTML, $(".artistSummary")[0].innerHTML, $(".albumTitle")[0].innerHTML, $(".art")[0].src); }     // perfect result
+      else if ( areAllSrcPresent === false ) {
+        $( $(".art")[0].remove() );
+        console.log("\"%s\" by %s on the album %s \(%s\).", $(".songTitle")[0].innerHTML, $(".artistSummary")[0].innerHTML, $(".albumTitle")[0].innerHTML, $(".art")[0].src);
+        $( $(".art")[0].remove() );
       }
-      if (areAllSrcPresent === true) { console.log("\"%s\" by %s on the album %s \(%s\).", song, artist, album, art[1].src); }     // perfect result
     } else { console.error("Not all the information is present or valid."); }
   }
 });
