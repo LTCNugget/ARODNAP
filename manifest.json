@@ -1,8 +1,10 @@
 {
   "manifest_version": 2,
   "name": "ARODNAP",
-  "description": "This extension will take the album art and .m4a of a Pandora.com page, if it ever works",
+  "description": "This extension will take the album art and .m4a of a Pandora.com page",
   "version": "0.5",
+  "minimum_chrome_version": "10.0",
+  "devtools_page": "html/devPage.html",
   "browser_action": {
     "default_icon": "img/icon48.png"
   },
@@ -10,15 +12,13 @@
     "48": "img/icon48.png"
   },
   "content_scripts": [ {
-    "matches": ["pandora.com"],
-    "js": ["js/content.js", "js/jQuery.js"]
+    "js": ["js/content.js", "js/jQuery.js"],
+    "matches": ["<all_urls>"]
   } ],
   "background": {
     "scripts": ["js/background.js"]
   },
   "permissions": [
-    "activeTab",
-    "tabs",
-    "<all_urls>"
+    "activeTab", "tabs", "https://*.googleapis.com/*"
   ]
 }
