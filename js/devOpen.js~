@@ -1,0 +1,1 @@
+chrome.devtools.panels.create("ARODNAP", "../img/icon48.png", "../html/devPage.html", function(panel) {});

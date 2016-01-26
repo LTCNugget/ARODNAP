@@ -15,7 +15,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {  
         var art = $(".art")[1].src;
         console.log("\"%s\" by %s on the album %s \(%s\).", $(".songTitle")[0].innerHTML, $(".artistSummary")[0].innerHTML, $(".albumTitle")[0].innerHTML, art);
         chrome.runtime.sendMessage({
-          greeting: "CTtoBG",
           song:$(".songTitle")[0].innerText,
           artist:$(".artistSummary")[0].innerText,
           album:$(".albumTitle")[0].innerText,
