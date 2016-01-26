@@ -3,7 +3,6 @@
 var art = "";
 var whereIs2ndNoSrc = "";
 var placeholder = "Not there yet...";
-var infoHtml = '<div class="item arodnapInfo" style="display: block;"><div class="close1"></div><div class="heading">Arodnap Info</div><div class="itemContent"><p class="arodnapInfo"></p><p class="arodnapInfo"></p><p class="arodnapInfo"></p><p class="arodnapInfo"></p></div><div class="divider last"></div></div>';
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {     // listens for messages
   if ( request.name === "grabInfo" ) {
@@ -13,8 +12,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {  
         if (whereIs2ndNoSrc !== "") { for (var i = whereIs2ndNoSrc - 1; i >= 0; i--) { $( $(".art")[i].remove() ); var whereIs2ndNoSrc = ""; } }
         for (var i = 2; i <= $(".art").length - 1; i++) { $( $(".art")[i].remove() );}
         var art = $(".art")[1].src;
+<<<<<<< HEAD
         console.log("\"%s\" by %s on the album %s \(%s\).", $(".songTitle")[0].innerHTML, $(".artistSummary")[0].innerHTML, $(".albumTitle")[0].innerHTML, art);
         chrome.runtime.sendMessage({
+          greeting: "CTtoBG",
           song:$(".songTitle")[0].innerText,
           artist:$(".artistSummary")[0].innerText,
           album:$(".albumTitle")[0].innerText,
@@ -26,5 +27,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {  
         $("p.arodnapInfo")[0].innerText = "Song: " + $(".songTitle")[0].innerText;
         $("p.arodnapInfo")[1].innerText = "Artist: " + $(".artistSummary")[0].innerText; $("p.arodnapInfo")[2].innerHTML = "Album: <a href=" + art + ">" + $(".albumTitle")[0].innerText + "</a>";
         $("p.arodnapInfo")[3].innerText = "File: " + placeholder; art = ""; $( $(".art")[1].remove() );
+=======
+        console.log("\"%s\" by %s on the album %s \(%s\).", $(".songTitle")[0].innerHTML, $(".artistSummary")[0].innerHTML, $(".albumTitle")[0].innerHTML, art);     // expected result
+        $(".heading")[6].innerText = "arodnapHeading"; var infoBox = $(".getRelatedArtist")
+        if ( infoBox.length !== 4 ) { for (var i = infoBox.length; i <= 4; i++) {  } }
+        infoBox[0].innerText = "Song Title: " + $(".songTitle")[0].innerHTML; infoBox[1].innerText = "Artist: " + $(".artistSummary")[0].innerHTML;
+        infoBox[2].innerText = "Album (cover): " + $(".albumTitle")[0].innerHTML + "(" + art + ")"; infoBox[3].innerText = "Song file: " + placeholder;
+        for (var i = 3; i <= 0; i--) { $(".getRelatedArtist")[i].href = undefined; }
+        infoBox[3].href = art;
+        art = ""; $( $(".art")[1].remove() );
+>>>>>>> c631a72650b42d512abdc235f33fa3c8a489e295
       } else { console.error("Not all the information is present or valid."); }
     } else { console.error("Website is not pandora.com"); } } });

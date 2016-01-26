@@ -3,8 +3,11 @@
   "name": "ARODNAP",
   "description": "This extension will take the album art and .m4a of a Pandora.com page",
   "version": "0.5",
+<<<<<<< HEAD
   "minimum_chrome_version": "10.0",
   "devtools_page": "../html/devOpen.html",
+=======
+>>>>>>> c631a72650b42d512abdc235f33fa3c8a489e295
   "browser_action": {
     "default_icon": "img/icon48.png"
   },
