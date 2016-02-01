@@ -1,4 +1,4 @@
-// devPage.js
+// devPage.js - sends url for song file to background
 
 // sorts through network requests and send the url's of audio files to background.js
 chrome.devtools.network.onRequestFinished.addListener(function(entry) {
